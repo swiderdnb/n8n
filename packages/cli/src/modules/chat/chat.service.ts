@@ -1,14 +1,23 @@
+import { Logger } from '@n8n/backend-common';
+import { ChatConfig } from '@n8n/config';
 import { Service } from '@n8n/di';
+import { OpenAiChatAgent } from '@n8n/n8n-chat';
 import { type IUser } from 'n8n-workflow';
 
 import { type ChatPayload } from './chat.types';
 
 @Service()
 export class ChatService {
-	constructor() {
-		// this.agent = new OpenAiChatAgent({
-		// 	logger: this.logger,
-		// });
+	private agent: OpenAiChatAgent;
+
+	constructor(
+		private readonly logger: Logger,
+		private readonly chatConfig: ChatConfig,
+	) {
+		this.agent = new OpenAiChatAgent({
+			logger: this.logger,
+			apiKey: this.chatConfig.openAiApiKey,
+		});
 	}
 
 	async getModels() {
@@ -16,8 +25,6 @@ export class ChatService {
 	}
 
 	async *chat(payload: ChatPayload, user: IUser, abortSignal?: AbortSignal) {
-		// const agent = await this.getAgent(payload.model);
-		// yield* agent.chat(payload, user, abortSignal);
-		yield* ['hello', 'world'];
+		yield* this.agent.chat(payload, user.id, abortSignal);
 	}
 }
