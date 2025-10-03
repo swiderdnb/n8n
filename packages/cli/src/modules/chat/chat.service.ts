@@ -24,7 +24,7 @@ export class ChatService {
 		return await Promise.resolve(['gpt-3.5-turbo', 'gpt-4']);
 	}
 
-	async *chat(payload: ChatPayload, user: IUser, abortSignal?: AbortSignal) {
-		yield* this.agent.chat(payload, user.id, abortSignal);
+	async *chat(payload: ChatPayload, user: IUser, messageId: string, abortSignal?: AbortSignal) {
+		yield* this.agent.chat(payload, user.id, messageId, abortSignal);
 	}
 }

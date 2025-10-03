@@ -31,7 +31,7 @@ export const RESOURCES = {
 	execution: ['delete', 'read', 'retry', 'list', 'get'] as const,
 	workflowTags: ['update', 'list'] as const,
 	role: ['manage'] as const,
-	chat: ['manage'] as const,
+	chat: ['manage', 'message'] as const,
 } as const;
 
 export const API_KEY_RESOURCES = {
